@@ -208,6 +208,9 @@ h1 {
 }
 .sell-button:hover {
   background-color: black;
+  
+}
+span:hover{
   color: white;
   font-weight: 600;
   transform: scale(1.1);
