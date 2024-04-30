@@ -7,8 +7,8 @@ export default function Sidebar({children}) {
   const toggle=()=>setIsOpen(!isOpen)
     const menuItem=[
       {
-      Path:'/',
-      name:"Home",
+      Path:'/home',
+      name:"home",
       icon:<FaHome />
     },
     {
@@ -22,7 +22,7 @@ export default function Sidebar({children}) {
       icon:<FaUser />
     },
     {
-      Path:'/logout',
+      Path:'/',
       name:"Log Out",
       icon:<MdOutlineLogout />
     },

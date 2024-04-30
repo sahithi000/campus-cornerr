@@ -1,10 +1,19 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 
 function ProductForm() {
-  const [productPic, setProductPic] = useState(
-    "https://static.thenounproject.com/png/4696705-200.png"
-  );
+  const [productPic, setProductPic] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    desc: "",
+    stuName: "",
+    depName: "",
+    phnNo: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+ 
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -13,22 +22,74 @@ function ProductForm() {
     }
   };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!formData.name || !formData.price || !formData.desc || !formData.stuName || !formData.depName || !formData.phnNo || !productPic) {
+      alert("Please fill in all fields and upload an image.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post("http://localhost:5000/create", {
+        ...formData,
+        image: productPic,
+      });
+      console.log(response.data);
+      // Optionally, handle success response
+      window.location.href = '/home';
+    } catch (error) {
+      console.error("Error posting product data:", error);
+      // Optionally, handle error response
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div>
       <h1>Describe the product</h1>
-      <form action="/create" method="post">
+      <form onSubmit={handleSubmit}>
         <div className="cont">
           <center>
             <p className="head">Include Some Details</p>
           </center>
           <span>Ad Title</span>
-          <input type="text" name="name" placeholder="Enter here" required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter here"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
           <span>Set the Price</span>
-          <input type="number" name="price" placeholder="Enter here" required />
+          <input
+            type="number"
+            name="price"
+            placeholder="Enter here"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
           <span>Description</span>
-          <input type="text" name="desc" placeholder="Enter here" required />
+          <input
+            type="text"
+            name="desc"
+            placeholder="Enter here"
+            value={formData.desc}
+            onChange={handleChange}
+            required
+          />
         </div>
-        <div></div>
         <div className="cont">
           <center>
             <p className="head">Include Image</p>
@@ -42,7 +103,6 @@ function ProductForm() {
             onChange={handleFileChange}
           />
         </div>
-        <div></div>
         <div className="cont">
           <center>
             <p className="head">Include Your Details</p>
@@ -50,28 +110,33 @@ function ProductForm() {
           <span>Student Name</span>
           <input
             type="text"
-            name="stu-name"
+            name="stuName"
             placeholder="Enter here"
+            value={formData.stuName}
+            onChange={handleChange}
             required
           />
           <span>Department</span>
           <input
             type="text"
-            name="dep-name"
+            name="depName"
             placeholder="Enter here"
+            value={formData.depName}
+            onChange={handleChange}
             required
           />
           <span>Phone</span>
           <input
             type="number"
-            name="phn-no"
+            name="phnNo"
             placeholder="Enter here"
+            value={formData.phnNo}
+            onChange={handleChange}
             required
           />
         </div>
-        <div></div>
         <div className="cont">
-          <button type="submit">Post Your Add</button>
+          <button type="submit" disabled={isSubmitting}>Post Your Ad</button>
         </div>
       </form>
     </div>
