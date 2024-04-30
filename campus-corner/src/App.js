@@ -1,20 +1,23 @@
 import './App.css';
-import home from './components/home';
-import login from './components/login';
-import signup from './components/signup';
-import { BrowserRouter as Router,Route,Switch,Routes} from 'react-router-dom' ;
-import { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import Home from './pages/Home';
+import Events from './pages/Events';
+import Sidebar from './components/sidebar';
+import Profile from './pages/Profile'
+import './App.css';
 function App() {
   return (
     <div className="App">
       <div className='nav'>
-        <Router>
+      <BrowserRouter>
+          <Sidebar>
           <Routes>
-            <Route path='/' element="{<login/>} "></Route>
-            <Route path='/signup' element="{<signup/>} "></Route>
-            <Route path='/home' element="{<home/>} "></Route>
+            <Route path='/' element={<Home/>} />
+            <Route path='/events' element={<Events/>} />
+            <Route path='/profile' element={<Profile/>} />
           </Routes>
-        </Router>
+          </Sidebar>
+        </BrowserRouter>
       </div>
     </div>
   );
