@@ -1,0 +1,77 @@
+.sell-body {
+  display: block;
+  background-color: #212121;
+}
+.cont {
+  border: 1px ;
+  padding: 10px;
+  display: block;
+}
+img {
+  width: 15rem;
+  height: 15rem;
+}
+.head {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.chi-cont h1 {
+  text-align: center;
+  color: #ffffff;
+}
+
+.cont label {
+  display: block;
+  border: black;
+  width: 100px;
+  padding: 10px;
+  border-radius: 50px;
+  background-color: gray;
+  color: white;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.chi-cont form {
+  margin: 20px auto;
+  max-width: 1200px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chi-cont form input[type="text"],
+.chi-cont form input[type="number"] {
+  display: block;
+  width: 95%;
+  height: 2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.chi-cont input[type="file"] {
+  display: none;
+}
+
+.chi-cont button {
+  display: block;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  width: 10rem;
+  height: 2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cont button:hover {
+  background-color: #0056b3;
+}

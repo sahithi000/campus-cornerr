@@ -1,9 +1,10 @@
+
 import React, { useState } from "react";
 import axios from "axios";
-
-
+import './Sellform.css';
+import Sidebar from "./Sidebar";
 function ProductForm() {
-  const [productPic, setProductPic] = useState("");
+  const [productPic, setProductPic] = useState("https://static.thenounproject.com/png/4696705-200.png");
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -13,14 +14,34 @@ function ProductForm() {
     phnNo: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
- 
+
+  const covertToBase64 = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProductPic(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setProductPic(URL.createObjectURL(file));
+    covertToBase64(event);
+  };
+
+  const uploadImage = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/upload-image", {
+        base64: productPic,
+      }, {
+        maxContentLength: Infinity, // or any large number that fits your needs
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error uploading image:", error);
     }
   };
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,20 +53,29 @@ function ProductForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!formData.name || !formData.price || !formData.desc || !formData.stuName || !formData.depName || !formData.phnNo || !productPic) {
+    if (
+      !formData.name ||
+      !formData.price ||
+      !formData.desc ||
+      !formData.stuName ||
+      !formData.depName ||
+      !formData.phnNo ||
+      !productPic
+    ) {
       alert("Please fill in all fields and upload an image.");
       return;
     }
 
     setIsSubmitting(true);
     try {
+      await uploadImage();
       const response = await axios.post("http://localhost:5000/create", {
         ...formData,
         image: productPic,
       });
       console.log(response.data);
       // Optionally, handle success response
-      window.location.href = '/home';
+      window.location.href = "/home";
     } catch (error) {
       console.error("Error posting product data:", error);
       // Optionally, handle error response
@@ -55,7 +85,10 @@ function ProductForm() {
   };
 
   return (
-    <div>
+    <>
+    <Sidebar />
+    <div className="sell-body">
+    <div className="chi-cont">
       <h1>Describe the product</h1>
       <form onSubmit={handleSubmit}>
         <div className="cont">
@@ -136,11 +169,16 @@ function ProductForm() {
           />
         </div>
         <div className="cont">
-          <button type="submit" disabled={isSubmitting}>Post Your Ad</button>
+          <button type="submit" disabled={isSubmitting}>
+            Post Your Ad
+          </button>
         </div>
       </form>
     </div>
+    </div>
+    </>
   );
 }
 
 export default ProductForm;
+
