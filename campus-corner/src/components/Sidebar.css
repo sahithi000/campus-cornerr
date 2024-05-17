@@ -34,8 +34,10 @@ body {
 }
 .link {
   display: flex;
+  align-items: center;
+  justify-content: center;
   color: black;
-  padding: 8px 15px;
+  padding: 15px 0;
   gap: 8px;
   text-decoration: none;
   transition: all 0.5s;
