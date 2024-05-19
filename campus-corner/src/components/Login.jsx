@@ -46,13 +46,14 @@ function Login({ setLoggedIn }) {
             />
             <label htmlFor="username">Username</label>
           </div>
-          <div className="used-box">
+          <div className="user-box">
             <input
               type="password"
               id="password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <label htmlFor="password">Password</label>
           </div>
@@ -66,7 +67,7 @@ function Login({ setLoggedIn }) {
         </form>
         <center>
           <p>
-            No account ? <Link to="/signup">Signup</Link>
+            No account? <Link to="/signup">Signup</Link>
           </p>
         </center>
       </div>
@@ -75,7 +76,6 @@ function Login({ setLoggedIn }) {
 }
 
 export default Login;
-
 
 
 
