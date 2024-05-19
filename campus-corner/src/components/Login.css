@@ -2,9 +2,9 @@
   display: grid;
   place-items: center;
   height: 100vh;
- 
   background-color: #212121;
 }
+
 .login-container {
   position: absolute;
   top: 50%;
@@ -18,37 +18,42 @@
   border-radius: 10px;
 }
 
-.login-container .used-box {
+.login-container .user-box {
   position: relative;
+  margin-bottom: 30px;
 }
-.login-container .used-box input {
+
+.login-container .user-box input {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
   color: #fff;
-  margin-bottom: 30px;
   border: none;
   border-bottom: 1px solid #fff;
   outline: none;
   background: transparent;
 }
-.login-container .used-box label {
+
+.login-container .user-box label {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
   padding: 10px 0;
   font-size: 16px;
   color: #fff;
   pointer-events: none;
+  transform: translateY(-50%);
   transition: 0.5s;
 }
-.login-container .used-box input:focus ~ label,
-.login-container .used-box input:valid ~ label {
+
+.login-container .user-box input:focus ~ label,
+.login-container .user-box input:valid ~ label {
   top: -20px;
   left: 0;
   color: #bdb8b8;
   font-size: 12px;
 }
+
 .login-container form button {
   position: relative;
   display: inline-block;
@@ -69,6 +74,7 @@
   border-radius: 5px;
   box-shadow: 0 0 5px #03f40f, 0 0 25px #03f40f, 0 0 50px #03f40f;
 }
+
 .login-container button span {
   position: absolute;
   display: block;
@@ -92,6 +98,7 @@
   background: linear-gradient(90deg, transparent, #03f40f);
   animation: btn-anim1 2s linear infinite;
 }
+
 .login-container p {
   color: #ffffff;
 }
@@ -99,4 +106,8 @@
 .login-container a {
   text-decoration: none;
   color: #03f40f;
+}
+
+.error-message {
+  color: red;
 }
