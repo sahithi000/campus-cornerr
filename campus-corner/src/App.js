@@ -4,7 +4,7 @@ import Prepage from "./components/prepage";
 import Events from "./pages/Events";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import Profile from "./components/profile";
+import Profile from './components/Profile';
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import ProductForm from "./components/Sellform";
@@ -12,6 +12,7 @@ import HomeWithProducts from "./components/homewithproducts";
 import CreatorCard from "./components/creatercard";
 import RingLoader from "react-spinners/RingLoader";
 import Payment from "./components/payment";
+import ProtectedRoute from "./components/ProtectedRoute"; // Import the ProtectedRoute component
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -40,9 +41,12 @@ function App() {
             <Route path="/login" element={loggedIn ? <Navigate to="/home" /> : <Login setLoggedIn={setLoggedIn} />} />
             <Route path="/about" element={<CreatorCard />} />
             <Route path="/payment/:price" element={<Payment />} />
-            <Route path="/home/*" element={loggedIn ? <Home /> : <Navigate to="/login" />} />
+            <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/sellform" element={<ProductForm />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
             <Route path="/*" element={<MainContent />} />
-            <Route path="/sellform" element={<ProductForm />} />
           </Routes>
         )}
       </div>
@@ -86,8 +90,6 @@ function MainContent() {
 }
 
 export default App;
-
-
 
 
 
