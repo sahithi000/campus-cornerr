@@ -12,7 +12,8 @@ import HomeWithProducts from "./components/homewithproducts";
 import CreatorCard from "./components/creatercard";
 import RingLoader from "react-spinners/RingLoader";
 import Payment from "./components/payment";
-import ProtectedRoute from "./components/ProtectedRoute"; // Import the ProtectedRoute component
+import ProtectedRoute from "./components/ProtectedRoute";
+import Cart from "./components/Cart"; // Import the ProtectedRoute component
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -46,6 +47,7 @@ function App() {
               <Route path="/sellform" element={<ProductForm />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
+            <Route path="/cart" element={<Cart />} />
             <Route path="/*" element={<MainContent />} />
           </Routes>
         )}
