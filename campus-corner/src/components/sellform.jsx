@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import './Sellform.css';
 import Sidebar from "./Sidebar";
@@ -71,52 +71,55 @@ function ProductForm() {
       setIsSubmitting(false);
     }
   };
-
+  useEffect(() => {
+    // Change the top position of the Sidebar to 0px when component mounts
+    document.querySelector('.sidebar').style.top = '0px';
+    // Clean up function to reset the top position when component unmounts
+    return () => {
+      document.querySelector('.sidebar').style.top = '77px'; // Reset top position
+    };
+  }, []);
   return (
     <>
       <Sidebar />
       <div className="sell-body">
+      <h1>Product Details</h1>
         <div className="chi-cont">
-          <h1>Describe the product</h1>
+          
           <form onSubmit={handleSubmit}>
+            <div className="divv">
             <div className="cont">
-              <center>
-                <p className="head">Include Some Details</p>
-              </center>
-              <span>Ad Title</span>
+              
+              
               <input
                 type="text"
                 name="name"
-                placeholder="Enter here"
+                placeholder="Enter Product Title"
                 value={formData.name}
                 onChange={handleChange}
                 required
               />
-              <span>Set the Price</span>
+              
               <input
                 type="number"
                 name="price"
-                placeholder="Enter here"
+                placeholder="Enter Price"
                 value={formData.price}
                 onChange={handleChange}
                 required
               />
-              <span>Description</span>
+              
               <input
                 type="text"
                 name="desc"
-                placeholder="Enter here"
+                placeholder="Product Description"
                 value={formData.desc}
                 onChange={handleChange}
                 required
               />
-            </div>
-            <div className="cont">
-              <center>
-                <p className="head">Include Image</p>
-              </center>
+              
               <img id="product-pic" src={productPic} alt="Product" />
-              <label htmlFor="input-file">Upload Image</label>
+              
               <input
                 type="file"
                 accept="image/*"
@@ -124,42 +127,66 @@ function ProductForm() {
                 onChange={handleFileChange}
               />
             </div>
-            <div className="cont">
-              <center>
-                <p className="head">Include Your Details</p>
-              </center>
-              <span>Student Registered Number</span>
+            <div className="cont1">
+              
               <input
                 type="text"
                 name="stuName"
-                placeholder="Enter here"
+                placeholder="Registered Number"
                 value={formData.stuName}
                 onChange={handleChange}
                 required
               />
-              <span>Department</span>
-              <input
+              
+              <select
                 type="text"
                 name="depName"
-                placeholder="Enter here"
+                placeholder="Your Department"
                 value={formData.depName}
                 onChange={handleChange}
-                required
-              />
-              <span>Phone</span>
+                required>
+                <option ></option>
+                <option>
+                  IT
+                </option>
+                <option>
+                  CSE
+                </option>
+                <option>
+                  AIML
+                </option>
+                <option>
+                  AIDS
+                </option>
+                <option>
+                  ECE
+                </option>
+                <option>
+                  MECH
+                </option>
+                <option>
+                  EEE
+                </option>
+                <option>
+                  CIVIL
+                </option>
+              </select>
+              
               <input
                 type="number"
                 name="phnNo"
-                placeholder="Enter here"
+                placeholder="Your Mobile number"
                 value={formData.phnNo}
                 onChange={handleChange}
                 required
               />
-            </div>
-            <div className="cont">
-              <button type="submit" disabled={isSubmitting}>
-                Post Your Ad
+              <button type="submit" id="btn" disabled={isSubmitting}>
+                Post 
               </button>
+            </div>
+          
+              
+            
             </div>
           </form>
         </div>

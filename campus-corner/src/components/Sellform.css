@@ -1,4 +1,4 @@
-.sell-body {
+/* .sell-body {
   display: block;
   background-color: #212121;
 }
@@ -74,4 +74,77 @@ img {
 
 .cont button:hover {
   background-color: #0056b3;
+} */
+.sell-body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  height: 400px;
+}
+.chi-cont{
+  display: flex;
+  border-radius: 20px;
+  background: white;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  width: 700px;
+  box-shadow: 5px 5px 5px 5px whitesmoke;
+  
+}
+.divv{
+  display: flex;
+  flex-direction: row;
+  
+  justify-content: center;
+}
+.cont{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.cont1{
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  padding: 20px;
+  align-items: center;
+
+  
+}
+#product-pic{
+  width: 100px;
+  height: 100px;
+}
+input{
+  width: 200px;
+  height: 40px;
+  margin: 7px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  text-align: center;
+  box-shadow: 2px 2px 2px 2px whitesmoke;
+}
+#input-file{
+  border: none;
+  box-shadow: none;
+}
+#btn{
+  background:rgb(172, 186, 236);
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+select{
+  width: 200px;
+  height: 40px;
+  margin: 7px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  text-align: center;
+  box-shadow: 2px 2px 2px 2px whitesmoke;
 }
