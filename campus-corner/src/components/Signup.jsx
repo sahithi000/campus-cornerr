@@ -9,12 +9,33 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
 
+  const validateUsername = (username) => {
+    // Check if the length is 10
+    if (username.length !== 10) return false;
+    // Check if the first two characters are integers
+    if (isNaN(username[0]) || isNaN(username[1])) return false;
+    // Check if the 3rd and 4th characters are "pa"
+    return username[2] === 'p' && username[3] === 'a';
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    // Email domain validation
-    if (!email.endsWith("@vishnu.edu.in")) {
-      setAlertMessage("Email must be from the domain vishnu.edu.in");
+    // Email domain and username prefix validation
+    const emailDomain = "@vishnu.edu.in";
+    const emailPrefix = email.substring(0, email.indexOf(emailDomain));
+    if (!email.endsWith(emailDomain) || emailPrefix !== username) {
+      setAlertMessage(
+        `use${emailDomain} domain, with your own college mail`
+      );
+      return;
+    }
+
+    // Username validation
+    if (!validateUsername(username)) {
+      setAlertMessage(
+        'Username must be a valid college registration number ).'
+      );
       return;
     }
 
@@ -81,7 +102,6 @@ export default function Signup() {
     </div>
   );
 }
-
 
 
 // import React, { useState } from "react";

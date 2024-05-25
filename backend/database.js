@@ -24,35 +24,79 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect()
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
+  app.post('/signup', async (req, res) => {
+    try {
+      const { username, email, password } = req.body;
+      const emailDomain = "@vishnu.edu.in";
+      const emailPrefix = email.substring(0, email.indexOf(emailDomain));
 
-app.post('/signup', async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
+      if (!email.endsWith(emailDomain) || emailPrefix !== username) {
+        return res.status(400).json({ error: `Email must be of the format username${emailDomain}, where username is your college registration number` });
+      }
 
-    if (!email.endsWith('@vishnu.edu.in')) {
-        return res.status(400).json({ error: 'Email must be from the domain vishnu.edu.in' });
-    }
+      // Validate that the username meets the specified criteria
+      const validateUsername = (username) => {
+        // Check if the length is 10
+        if (username.length !== 10) return false;
+        // Check if the first two characters are integers
+        if (isNaN(username[0]) || isNaN(username[1])) return false;
+        // Check if the 3rd and 4th characters are "pa"
+        return username[2] === 'p' && username[3] === 'a';
+      };
 
-    const database = client.db('react');
-    const collection = database.collection('olxusers');
+      if (!validateUsername(username)) {
+        return res.status(400).json({ error: 'Username must be a valid college registration number (first two characters must be integers, 3rd and 4th characters must be "pa", and total length must be 10 characters).' });
+      }
 
-    const existingUser = await collection.findOne({ $or: [{ username }, { email }] });
-    if (existingUser) {
+      const database = client.db('react');
+      const collection = database.collection('olxusers');
+
+      const existingUser = await collection.findOne({ $or: [{ username }, { email }] });
+      if (existingUser) {
         const errorMsg = existingUser.username === username ?
             'Username already exists. Please choose a different username.' :
             'Email already exists. Please use a different email address.';
         return res.status(400).json({ error: errorMsg });
-    }
+      }
 
-    const newUser = { username, email, password };
-    await collection.insertOne(newUser);
-    console.log('User registered successfully!');
-    res.status(201).json({ message: 'User registered successfully!' });
-  } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).json({ error: 'An error occurred while registering user.' });
-  }
-});
+      const newUser = { username, email, password };
+      await collection.insertOne(newUser);
+      console.log('User registered successfully!');
+      res.status(201).json({ message: 'User registered successfully!' });
+    } catch (error) {
+      console.error('Error registering user:', error);
+      res.status(500).json({ error: 'An error occurred while registering user.' });
+    }
+  });
+
+// app.post('/signup', async (req, res) => {
+//   try {
+//     const { username, email, password } = req.body;
+
+//     if (!email.endsWith('@vishnu.edu.in')) {
+//         return res.status(400).json({ error: 'Email must be from the domain vishnu.edu.in' });
+//     }
+
+//     const database = client.db('react');
+//     const collection = database.collection('olxusers');
+
+//     const existingUser = await collection.findOne({ $or: [{ username }, { email }] });
+//     if (existingUser) {
+//         const errorMsg = existingUser.username === username ?
+//             'Username already exists. Please choose a different username.' :
+//             'Email already exists. Please use a different email address.';
+//         return res.status(400).json({ error: errorMsg });
+//     }
+
+//     const newUser = { username, email, password };
+//     await collection.insertOne(newUser);
+//     console.log('User registered successfully!');
+//     res.status(201).json({ message: 'User registered successfully!' });
+//   } catch (error) {
+//     console.error('Error registering user:', error);
+//     res.status(500).json({ error: 'An error occurred while registering user.' });
+//   }
+// });
 
 app.post('/upload-image', async (req, res) => {
   try {
@@ -115,7 +159,7 @@ app.post('/create', async (req, res) => {
     res.status(201).json({ message: 'Product created successfully!' });
   } catch (err) {
     console.error("Error creating product:", err);
-    res.status(500).json({ error: 'An error occurred while creating product.' });
+    res.status(500).json({ error: 'An error occurred while creating product.', details: err.message });
   }
 });
 
